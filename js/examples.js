@@ -240,3 +240,5 @@
 // secondToggle.toggle();
 // console.log(secondToggle.on);
 // console.groupEnd('secondToggle');
+// (function () {
+// })();
