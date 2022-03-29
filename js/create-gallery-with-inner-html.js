@@ -32,6 +32,9 @@ const pictures = [
   },
 ];
 
+const mainTitleEl = document.querySelector('.js-main-title');
+// mainTitleEl.innerHTML = '<span>Title</span>';
+
 /*
 <li class="gallery-item">
   <a href="#">
@@ -43,18 +46,16 @@ const pictures = [
 const galleryEL = document.querySelector('.js-gallery');
 
 const makeGalleryCard = ({ width, height, alt, url } = {}) => {
-  return `
-    <li class="gallery-item">
-      <a href="#">
-        <img src="${url}" alt="${alt}" width="${width}" height="${height}">
-      </a>
-    </li>
-  `;
+  return `<li class="gallery-item">
+  <a href="#">
+    <img src="${url}" alt="${alt}" width="${width}" height="${height}">
+  </a>
+</li>`;
 };
 
-const galleryCards = pictures.map(el => {
-  return makeGalleryCard(el);
-});
 
-// galleryEL.innerHTML = galleryCards.join('');
-galleryEL.insertAdjacentHTML('beforeend', galleryCards.join(''));
+// Создания масива строк с элементами
+const galleryCardsArr = pictures.map(makeGalleryCard).join('');
+
+// Вставка элементов на страницу
+galleryEL.insertAdjacentHTML('beforeend', galleryCardsArr);

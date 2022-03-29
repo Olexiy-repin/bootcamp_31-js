@@ -44,30 +44,31 @@ const galleryListEl = document.querySelector('.js-gallery');
 
 // Функция для создание карточки makeGalleryCard(cardInfo)
 const makeGalleryCard = ({ width, height, url, alt } = {}) => {
+  
   // Создание li
-  const galleryItemEl = document.createElement('li');
-  galleryItemEl.classList.add('gallery-item');
+  const listItemEl = document.createElement('li');
+  listItemEl.classList.add('gallery-item');
 
   // Создание a
-  const galleryLinkEl = document.createElement('a');
-  galleryLinkEl.href = '#';
-  galleryItemEl.append(galleryLinkEl);
+  const listLinkEl = document.createElement('a');
+  listLinkEl.href = '#';
+  listItemEl.append(listLinkEl);
 
   // Создание img
-  const galleryImgEl = document.createElement('img');
-  galleryImgEl.src = url;
-  galleryImgEl.alt = alt;
-  galleryImgEl.width = width;
-  galleryImgEl.height = height;
-  galleryLinkEl.append(galleryImgEl);
+  const listImgEl = document.createElement('img');
+  listImgEl.src = url;
+  listImgEl.alt = alt;
+  listImgEl.width = width;
+  listImgEl.height = height;
+  listLinkEl.append(listImgEl);
 
-  return galleryItemEl;
+  return listItemEl;
 };
 
 // Перебор коллекции карточек через map
-const galleryCards = pictures.map(el => {
+const galleryCardsArr = pictures.map((el, idx, arr) => {
   return makeGalleryCard(el);
 });
 
 // Вставка коллекции карточек на страницу
-galleryListEl.append(...galleryCards);
+galleryListEl.append(...galleryCardsArr);

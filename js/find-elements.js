@@ -2,21 +2,14 @@
 //* Объект window и document
 
 //* Дедовские методы поиска элементов (getElementBy...)
-// const listIetemsEl = document.getElementsByClassName('list__item');
 
-// console.log(listIetemsEl);
 //* Современные методы поиска элементов (querySelector)
-// const titleEl = document.querySelector('#title');
-// const descEl = document.querySelector('.description');
-// const listEl = document.querySelector('ul');
-// const listItemsEl = document.querySelectorAll('.list__item');
+// const listLinkEl = [...document.querySelectorAll('.list__link')];
 
-// console.log(titleEl);
-// console.log(descEl);
-// console.log(listEl);
-// console.log(listItemsEl);
+// console.log(listLinkEl);
 
 //* Навигации по DOM дереву
-// const listEl = document.querySelector('ul');
+// const listEl = document.querySelector('.list');
+// const liEl = listEl.children;
 
-// console.log(listEl.firstElementChild);
+// console.log(liEl.length);

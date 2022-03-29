@@ -5,17 +5,14 @@ const descriptionEl = document.querySelector('.js-desc');
 const imgEl = document.querySelector('.js-img');
 const swapBtnEl = document.querySelector('.js-swap-image-btn');
 
-mainTitleEl.textContent = 'Hello';
-descriptionEl.textContent = 'Description';
+// mainTitleEl.textContent = 'Main title';
 
-// imgEl.src = 'https://picsum.photos/id/870/200/300';
-// imgEl.alt = 'beacon';
-// console.log(imgEl.src);
+// https://picsum.photos/200/300
 
-swapBtnEl.addEventListener('click', () => {
-  imgEl.src = 'https://picsum.photos/id/870/200/300';
-  imgEl.alt = 'beacon';
-});
+// swapBtnEl.addEventListener('click', () => {
+//     imgEl.src = 'https://picsum.photos/200/300';
+//     imgEl.alt = 'random image';
+// });
 
 /*
  * Доступ к аттрибутам
@@ -27,4 +24,3 @@ swapBtnEl.addEventListener('click', () => {
  * elem.attributes
  */
 
-console.log(imgEl);

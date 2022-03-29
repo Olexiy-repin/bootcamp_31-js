@@ -7,22 +7,22 @@
 </li>
 */
 
+const listEl = document.querySelector('.js-gallery');
+
 // Создание li
-const galleryItemEl = document.createElement('li');
-galleryItemEl.classList.add('gallery-item');
+const listItemEl = document.createElement('li');
+listItemEl.classList.add('gallery-item');
 
 // Создание a
-const galleryLinkEl = document.createElement('a');
-galleryLinkEl.href = '#';
-galleryItemEl.append(galleryLinkEl);
+const listLinkEl = document.createElement('a');
+listLinkEl.href = '#';
+listItemEl.append(listLinkEl);
 
 // Создание img
-const galleryImgEl = document.createElement('img');
-galleryImgEl.src = 'https://picsum.photos/id/237/200/300';
-galleryImgEl.alt = 'Labrador';
-galleryLinkEl.append(galleryImgEl);
+const listImgEl = document.createElement('img');
+listImgEl.src = 'https://picsum.photos/id/237/200/300';
+listImgEl.alt = 'Labrador';
+listLinkEl.append(listImgEl);
 
 // Вставка элементов
-const galleryEl = document.querySelector('.js-gallery');
-
-galleryEl.append(galleryItemEl);
+listEl.append(listItemEl);
