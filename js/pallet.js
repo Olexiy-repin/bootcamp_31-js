@@ -16,3 +16,18 @@ const paintElements = () => {
 };
 
 paintElements();
+
+const onPalletElClick = event => {
+  const target = event.target;
+
+  if (target.nodeName !== 'LI') {
+    return;
+  }
+
+  const currentColor = target.dataset.color;
+  const outputColor = target.querySelector('.pallet__item-color');
+
+  outputColor.textContent = currentColor;
+};
+
+palletEl.addEventListener('click', onPalletElClick);
