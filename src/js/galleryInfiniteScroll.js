@@ -1,32 +1,34 @@
 'use strict';
 // https://unsplash.com/
-
 import { UnsplashAPI } from './unsplash-api';
-import galleryCardsTemplate from '../templates/gallery-card.hbs';
+import createGalleryCards from '../templates/gallery-card.hbs';
 
 const searchFormEl = document.querySelector('.js-search-form');
 const galleryListEl = document.querySelector('.js-gallery');
-
-const unsplashApi = new UnsplashAPI();
-
-// unsplashApi.getRandomPhotos().then(({ data } = {}) => {
-//   galleryListEl.insertAdjacentHTML('beforeend', galleryCardsTemplate(data));
-// });
+const targetEl = document.querySelector('.target-element');
 
 const options = {
-  rootMargin: '0px 0px 200px 0px',
-  threshold: 1,
+  root: null,
+  rootMargin: '100px',
+  threshold: 1.0,
 };
 
-const observer = new IntersectionObserver(entries => {
+const observer = new IntersectionObserver((entries, observe) => {
   entries.forEach(async entry => {
     if (entry.isIntersecting) {
+      unsplashApi.page += 1;
+
       try {
-        unsplashApi.page += 1;
+        const photosResponse = await unsplashApi.fetchPhotos();
 
-        const { data } = await unsplashApi.fetchPhotos();
+        if (unsplashApi.page === photosResponse.data.total_pages) {
+          observer.unobserve(targetEl);
+        }
 
-        galleryListEl.insertAdjacentHTML('beforeend', galleryCardsTemplate(data.results));
+        galleryListEl.insertAdjacentHTML(
+          'beforeend',
+          createGalleryCards(photosResponse.data.results)
+        );
       } catch (err) {
         console.log(err);
       }
@@ -34,48 +36,35 @@ const observer = new IntersectionObserver(entries => {
   });
 }, options);
 
-searchFormEl.addEventListener('submit', async event => {
+const unsplashApi = new UnsplashAPI();
+
+const appendRandomPhotos = async () => {
   try {
-    event.preventDefault();
+    const response = await unsplashApi.fetchRandomPhotos();
 
-    const keyword = event.currentTarget.elements['user-search-query'].value;
-
-    if (keyword.trim() === '') {
-      return;
-    }
-
-    unsplashApi.keyword = keyword;
-    unsplashApi.page = 1;
-
-    galleryListEl.innerHTML = '';
-
-    const { data } = await unsplashApi.fetchPhotos();
-
-    galleryListEl.insertAdjacentHTML('beforeend', galleryCardsTemplate(data.results));
-
-    setTimeout(() => {
-      observer.observe(document.querySelector('.target-element'));
-    }, 100);
+    galleryListEl.innerHTML = createGalleryCards(response.data);
   } catch (err) {
     console.log(err);
   }
-});
+};
 
-// 1 способ
-// window.addEventListener('scroll', async event => {
-//   let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+appendRandomPhotos();
 
-//   if (windowRelativeBottom <= document.documentElement.clientHeight + 100) {
-//     try {
-//       unsplashApi.page += 1;
+const onSearchFormSubmit = async event => {
+  event.preventDefault();
 
-//       const { data } = await unsplashApi.fetchPhotos();
+  const searchQuery = event.currentTarget.elements['user-search-query'].value;
+  unsplashApi.query = searchQuery;
+  unsplashApi.page = 1;
 
-//       galleryListEl.insertAdjacentHTML('beforeend', galleryCardsTemplate(data.results));
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-// });
+  try {
+    const photosResponse = await unsplashApi.fetchPhotos();
 
-// 2 способ
+    galleryListEl.innerHTML = createGalleryCards(photosResponse.data.results);
+    observer.observe(targetEl);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+searchFormEl.addEventListener('submit', onSearchFormSubmit);

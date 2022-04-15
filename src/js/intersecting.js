@@ -13,17 +13,19 @@ sectionsEl.forEach(el => {
   )}, ${randomInteger(0, 255)})`;
 });
 
-// const options = {
-//   rootMargin: '0px 0px 0px 0px',
-//   threshold: 1,
-// };
+const observerOptions = {
+  root: null,
+  rootMargin: '100px 0px 0px 0px',
+  threshold: 1.0,
+};
 
-// const observer = new IntersectionObserver((entries, observer) => {
-//   entries.forEach(entry => {
-//     if (entry.isIntersecting) {
-//       console.log('Hello');
-//     }
-//   });
-// }, options);
+const logFn = (entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      console.log('Hello');
+    }
+  });
+};
 
-// observer.observe(targetSecEl);
+const observer = new IntersectionObserver(logFn, observerOptions);
+observer.observe(targetSecEl);
